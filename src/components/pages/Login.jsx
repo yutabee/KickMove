@@ -13,18 +13,19 @@ export const Login = () => {
 
   const navigate = useNavigate();
 
+  //email
   const handleChangeEmail = (e) => {
     setEmail(e.target.value);
-    // console.log(e.target.value);
   };
+  //password
   const handleChangePassword = (e) => {
     setPassword(e.target.value);
-    // console.log(e.target.value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    //handle Login
     await signInWithEmailAndPassword(auth, email, password)
       .then((res) => {
         console.log(res);
