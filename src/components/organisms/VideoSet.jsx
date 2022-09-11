@@ -7,7 +7,7 @@ import { VideoPlayer } from './VideoPlayer';
 import { drawKeypoints, drawSkeleton } from '../../utilities';
 
 
-export const VideoSet = memo(({videoURL}) => {
+export const VideoSet = memo(({videoURL ,setPose}) => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
 
@@ -16,11 +16,33 @@ export const VideoSet = memo(({videoURL}) => {
     if (typeof videoRef.current !== 'undefined' && videoRef.current !== null ) {
       const video = videoRef.current;
       console.log(video);
-      console.log(canvasRef);
+      // console.log(canvasRef);
       let poses = await detector.estimatePoses(video);
+    
+    //Posenetのオブジェクト形式に変換
+      const keypoinsArr = poses[0].keypoints.map((keypoint) => (
+        {
+          "position": {
+            "y": keypoint.y,
+            "x": keypoint.x,
+          },
+          "part": keypoint.name,
+          "score": keypoint.score,
+        }
+      ));
+      const setObj = {
+        "score":poses[0].score,
+        "keypoints":keypoinsArr,
+      }
+      // console.log(poses[0]);
+
+    
+      // setPose(poses[0]);
+      setPose(setObj);
 
       const videoWidth = video.width;
       const videoHeight = video.height;
+      // console.log(video);
 
       drawCanvas(poses[0], video, videoWidth, videoHeight, canvasRef);    
     }
@@ -37,15 +59,15 @@ export const VideoSet = memo(({videoURL}) => {
 
   const drawCanvas = (poses, video, videoWidth, videoHeight, canvas) => {
     const ctx = canvas.current.getContext("2d");
+
     canvas.current.width = videoWidth;
     canvas.current.height = videoHeight;
 
     // console.log(video);
-    console.log(poses.keypoints);
+    // console.log(poses.keypoints);
   
     drawKeypoints(poses.keypoints, 0.5, ctx);
     drawSkeleton(poses.keypoints, 0.5, ctx);
-
   }
 
   useEffect(() => {
@@ -67,7 +89,7 @@ export const VideoSet = memo(({videoURL}) => {
                 videoSrc={ videoURL }
               />
               <canvas
-                ref={canvasRef}
+              ref={canvasRef}
               >キャンバス</canvas>  
           </div>
         ) : (

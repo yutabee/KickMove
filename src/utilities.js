@@ -97,7 +97,7 @@ export function drawPoint(ctx, y, x, r, color) {
  /**
   * Draws a pose skeleton by looking up all adjacent keypoints/joints
   */
- export const drawSkeleton = (keypoints, minConfidence, ctx, scale = 0.3) => {
+ export const drawSkeleton = (keypoints, minConfidence, ctx, scale = 0.625) => {
    const adjacentKeyPoints =
        posenet.getAdjacentKeyPoints(keypoints, minConfidence);
  
@@ -111,7 +111,7 @@ export function drawPoint(ctx, y, x, r, color) {
  /**
   * Draw pose keypoints onto a canvas
   */
-export const drawKeypoints = (keypoints, minConfidence, ctx, scale = 0.3) => {
+export const drawKeypoints = (keypoints, minConfidence, ctx, scale = 0.625) => {
      for (let i = 0; i < keypoints.length; i++) {
      const keypoint = keypoints[i];
      if ( keypoint.score < minConfidence ) {
