@@ -4,21 +4,21 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Home } from './components/pages/Home';
 import { Page404 } from './components/pages/Page404';
 import { Login } from './components/pages/Login';
-import { AuthProvider } from './provider/AuthProvider';
+// import { AuthProvider } from './provider/AuthProvider';
 
 
 function App() {
   
   return (
     <Router>
-       <AuthProvider>
+       {/* <AuthProvider> */}
         <Routes>
           <Route path='/home' element={<Home />} />
           <Route path='signup' element={<SignUp />} />
           <Route path='/' element={<Login/>} />
           <Route path='*' element={<Page404/>} />
         </Routes>
-      </AuthProvider>
+      {/* </AuthProvider> */}
     </Router>
    
   );
